@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint '**/*.js'",
-    "lint:fix": "prettier-eslint '**/*.js' --write"
+    "lint:fix": "prettier-eslint '**/*.js' --write",
+    "storybook": "start-storybook -p 7007"
   },
   "husky": {
     "hooks": {
@@ -22,12 +23,21 @@
   },
   "dependencies": {
     "expo": "^33.0.0",
+    "expo-font": "~5.0.1",
+    "native-base": "^2.13.5",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-web": "^0.11.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@storybook/addon-actions": "^5.1.10",
+    "@storybook/addon-links": "^5.1.10",
+    "@storybook/addons": "^5.1.10",
+    "@storybook/react-native": "^5.1.10",
+    "@storybook/react-native-server": "^5.1.10",
+    "babel-loader": "^8.0.6",
     "babel-preset-expo": "^5.1.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
