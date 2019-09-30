@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { Actions } from 'react-native-router-flux';
 import {
 	Container,
 	Body,
@@ -13,60 +13,147 @@ import {
 	Button,
 	Text
 } from 'native-base';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
+import axios from 'axios';
+
 import {
 	LoadingButton,
 	ContentSpinner,
 	CommonContainer,
+	CommonText,
 	CommonField,
 	TransparentButton
 } from '../Common';
 
 class Register extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: '',
+			password: '',
+			confirmPassword: '',
+			username: '',
+			firstName: '',
+			lastName: ''
+		};
+	}
+
+	handleChangeUsername = username => this.setState({ username });
+	handleChangeFirstname = firstName => this.setState({ firstName });
+	handleChangeLastname = lastName => this.setState({ lastName });
+	handleChangePassword = password => this.setState({ password });
+	handleChangeCPassword = confirmPassword => this.setState({ confirmPassword });
+	handleChangeEmail = email => this.setState({ email });
+
+	handleRegister = () => {
+		const {
+			email,
+			password,
+			username,
+			firstName,
+			lastName,
+			confirmPassword
+		} = this.state;
+
+		let validator = email.includes('@');
+		if (validator) {
+			axios
+				.post('http://localhost:3000/users', {
+					email,
+					password,
+					firstName,
+					lastName,
+					username,
+					confirmPassword
+				})
+				.then(response => {
+					if (response.status == 201) {
+					}
+					Actions.login();
+				})
+				.catch(() => {
+					alert('user already exists');
+					alert(response.data);
+				});
+		} else {
+			alert('error error error');
+		}
+	};
+
 	render() {
 		return (
-			<Container>
-				<Content>
-					<Form>
-						<Item floatingLabel>
-							<Label>Username</Label>
-							<Input value={this.props.email} />
-						</Item>
-						<Item floatingLabel>
-							<Label>Password</Label>
-							<Input value={this.props.password} secureTextEntry />
-						</Item>
-						<Button primary full style={{ marginTop: 50 }}>
-							<Text>Login</Text>
-						</Button>
-						<Button
-							primary
-							full
-							onPress={() => Actions.register()}
-							style={{ marginTop: 20 }}
-						>
-							<Text>Register</Text>
-						</Button>
-						<Button transparent full style={{ marginTop: 10 }}>
-							<Text>Forgot Password</Text>
-						</Button>
-					</Form>
-				</Content>
-			</Container>
+			<CommonContainer paddedContent={true}>
+				<Form>
+					<Item floatingLabel>
+						<Label>Email</Label>
+
+						<Input
+							onChangeText={this.handleChangeEmail}
+							value={this.state.email}
+						/>
+					</Item>
+
+					<Item floatingLabel>
+						<Label>Password</Label>
+
+						<Input
+							onChangeText={this.handleChangePassword}
+							value={this.state.password}
+							secureTextEntry
+						/>
+					</Item>
+
+					<Item floatingLabel>
+						<Label>Confirm Password</Label>
+
+						<Input
+							onChangeText={this.handleChangeCPassword}
+							value={this.state.confirmPassword}
+							secureTextEntry
+						/>
+					</Item>
+
+					<Item floatingLabel>
+						<Label>Username</Label>
+
+						<Input
+							onChangeText={this.handleChangeUsername}
+							value={this.state.username}
+						/>
+					</Item>
+
+					<Item floatingLabel>
+						<Label>Firstname</Label>
+
+						<Input
+							onChangeText={this.handleChangeFirstname}
+							value={this.state.firstName}
+						/>
+					</Item>
+					<Item floatingLabel>
+						<Label>Lastname</Label>
+
+						<Input
+							onChangeText={this.handleChangeLastname}
+							value={this.state.lastName}
+						/>
+					</Item>
+
+					<Button
+						primary
+						full
+						onPress={this.handleRegister}
+						style={{ marginTop: 20 }}
+					>
+						<Text>Register</Text>
+					</Button>
+
+					<Button transparent full style={{ marginTop: 10 }}>
+						<Text>Forgot Password</Text>
+					</Button>
+				</Form>
+			</CommonContainer>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return { state };
-}
-
-export default compose(
-	connect(
-		mapStateToProps,
-		actions
-	),
-	reduxForm({ form: 'register' })
-)(Register);
+export default Register;

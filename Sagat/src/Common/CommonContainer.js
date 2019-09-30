@@ -3,8 +3,10 @@ import { Container, Content } from 'native-base';
 import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
-	background-color: ${props => (props.inverse ? '#fff' : '#66bb6a')};
+	background-color: ${props => (props.inverse ? '#fff' : '#fff')};
 `;
+
+//bb4d00
 
 const StyledContent = styled(Content)`
 	padding-left: 20px;

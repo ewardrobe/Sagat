@@ -6,11 +6,11 @@ const TextStyle = styled(Text)`
 	font-size: 13px;
 	text-align: center;
 	font-weight: 700;
-	color: white;
+	color: black;
 `;
 
 const InputStyle = styled(Input)`
-	color: white;
+	color: black;
 	font-size: 15px;
 	text-align: center;
 `;
