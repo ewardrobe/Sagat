@@ -6,22 +6,34 @@ import {
 	Body,
 	Header,
 	Content,
-	Form,
-	Item,
-	Input,
-	Label,
-	Title,
-	Button,
-	Text
+	Text,
+	FooterTab,
+	Footer,
+	Button
 } from 'native-base';
 
 class Profile extends Component {
 	render() {
 		return (
 			<Container>
-				<Content>
-					<Text>daffds</Text>
-				</Content>
+				<Header />
+				<Content />
+				<Footer>
+					<FooterTab>
+						<Button>
+							<Text>Apps</Text>
+						</Button>
+						<Button>
+							<Text>Camera</Text>
+						</Button>
+						<Button active>
+							<Text>Navigate</Text>
+						</Button>
+						<Button>
+							<Text>Contact</Text>
+						</Button>
+					</FooterTab>
+				</Footer>
 			</Container>
 		);
 	}
