@@ -10,7 +10,7 @@ let data = {
 	lastName: 'marks',
 	password: 'austin123',
 	passwordConfirm: 'austin123',
-	email: 'austin@live.com'
+	email: 'mary@live.com'
 };
 
 axios

@@ -4,7 +4,7 @@ import { Text } from 'native-base';
 
 const TermsTextStyle = styled(Text)`
 	text-align: center;
-	color: white;
+	color: black;
 	margin-top: 20px;
 `;
 

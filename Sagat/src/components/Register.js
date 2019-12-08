@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {
 	Container,
@@ -28,12 +29,12 @@ class Register extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
-			password: '',
-			confirmPassword: '',
 			username: '',
 			firstName: '',
-			lastName: ''
+			lastName: '',
+			password: '',
+			passwordConfirm: '',
+			email: ''
 		};
 	}
 
@@ -41,102 +42,84 @@ class Register extends Component {
 	handleChangeFirstname = firstName => this.setState({ firstName });
 	handleChangeLastname = lastName => this.setState({ lastName });
 	handleChangePassword = password => this.setState({ password });
-	handleChangeCPassword = confirmPassword => this.setState({ confirmPassword });
+	handleChangeCPassword = passwordConfirm => this.setState({ passwordConfirm });
 	handleChangeEmail = email => this.setState({ email });
 
 	handleRegister = () => {
+		Keyboard.dismiss();
 		const {
-			email,
-			password,
 			username,
 			firstName,
 			lastName,
-			confirmPassword
+			password,
+			passwordConfirm,
+			email
 		} = this.state;
 
-		let validator = email.includes('@');
-		if (validator) {
-			axios
-				.post('http://localhost:3000/users', {
-					email,
-					password,
-					firstName,
-					lastName,
-					username,
-					confirmPassword
-				})
-				.then(response => {
-					if (response.status == 201) {
-					}
-					Actions.login();
-				})
-				.catch(() => {
-					alert('user already exists');
-					alert(response.data);
-				});
-		} else {
-			alert('error error error');
-		}
+		//	let lowerCaseEmail = email.toLowerCase();
+
+		//let validator = lowerCaseEmail.includes('@');
+
+		axios
+			.post('http://localhost:3000/users', {
+				username,
+				firstName,
+				lastName,
+				password,
+				passwordConfirm,
+				email
+			})
+			.then(response => {
+				Actions.login();
+			})
+			.catch(() => {
+				alert('errors');
+			});
 	};
 
 	render() {
 		return (
 			<CommonContainer paddedContent={true}>
+				<CommonText text="Sign Up" />
+
 				<Form>
-					<Item floatingLabel>
-						<Label>Email</Label>
+					<CommonField
+						onChangeText={this.handleChangeEmail}
+						value={this.state.email}
+						label="Email"
+					/>
 
-						<Input
-							onChangeText={this.handleChangeEmail}
-							value={this.state.email}
-						/>
-					</Item>
+					<CommonField
+						onChangeText={this.handleChangePassword}
+						value={this.state.password}
+						label="Password"
+						secureTextEntry
+					/>
 
-					<Item floatingLabel>
-						<Label>Password</Label>
+					<CommonField
+						onChangeText={this.handleChangeCPassword}
+						value={this.state.confirmPassword}
+						secureTextEntry
+						label="Confirm Password"
+					/>
 
-						<Input
-							onChangeText={this.handleChangePassword}
-							value={this.state.password}
-							secureTextEntry
-						/>
-					</Item>
+					<CommonField
+						onChangeText={this.handleChangeUsername}
+						value={this.state.username}
+						label="Username"
+					/>
 
-					<Item floatingLabel>
-						<Label>Confirm Password</Label>
+					<CommonField
+						onChangeText={this.handleChangeFirstname}
+						value={this.state.firstName}
+						label="Firstname"
+					/>
 
-						<Input
-							onChangeText={this.handleChangeCPassword}
-							value={this.state.confirmPassword}
-							secureTextEntry
-						/>
-					</Item>
-
-					<Item floatingLabel>
-						<Label>Username</Label>
-
-						<Input
-							onChangeText={this.handleChangeUsername}
-							value={this.state.username}
-						/>
-					</Item>
-
-					<Item floatingLabel>
-						<Label>Firstname</Label>
-
-						<Input
-							onChangeText={this.handleChangeFirstname}
-							value={this.state.firstName}
-						/>
-					</Item>
-					<Item floatingLabel>
-						<Label>Lastname</Label>
-
-						<Input
-							onChangeText={this.handleChangeLastname}
-							value={this.state.lastName}
-						/>
-					</Item>
+					<CommonField
+						onChangeText={this.handleChangeLastname}
+						value={this.state.lastName}
+						label="Lastname"
+					/>
 
 					<Button
 						primary
